@@ -325,7 +325,7 @@ export class StripeElements extends StripeBase {
    * Generates PaymentMethodData from the element.
    */
   private getPaymentMethodData(): Stripe.CreatePaymentMethodData {
-    const type = 'payment';
+    const type = 'card';
     const { billingDetails, paymentMethodData } = this;
     return ({
       billing_details: billingDetails,
@@ -388,7 +388,7 @@ export class StripeElements extends StripeBase {
   }
 
   private createElement(options: Stripe.StripeCardElementOptions) {
-    const element = this.elements!.create('payment', options);
+    const element = this.elements!.create('card', options);
     return element;
   }
 
