@@ -173,14 +173,14 @@ const SUB_STYLES = [
 export class StripeElements extends StripeBase {
   static readonly is = 'stripe-elements';
 
-  static readonly elementType = 'card';
+  static readonly elementType = 'payment';
 
   static readonly styles = [
     sharedStyles,
     style,
   ];
 
-  declare element: Stripe.StripeCardElement;
+  declare element: Stripe.StripePaymentElement;
 
   /* PUBLIC FIELDS */
 
@@ -266,7 +266,7 @@ export class StripeElements extends StripeBase {
   @stripeMethod public async createToken(
     tokenData = this.tokenData
   ): Promise<Stripe.TokenResult> {
-    return this.stripe!.createToken(this.element, tokenData);
+    return this.stripe!.createToken(this.element as any, tokenData);
   }
 
   /**
@@ -313,11 +313,7 @@ export class StripeElements extends StripeBase {
     return isValid;
   }
 
-  public updateStyle() {
-    this.element?.update({
-      style: this.getStripeElementsStyles(),
-    });
-  }
+  public updateStyle() {}
 
   /* PRIVATE METHODS */
 
@@ -325,13 +321,13 @@ export class StripeElements extends StripeBase {
    * Generates PaymentMethodData from the element.
    */
   private getPaymentMethodData(): Stripe.CreatePaymentMethodData {
-    const type = 'payment';
+    const type = 'card';
     const { billingDetails, paymentMethodData } = this;
     return ({
       billing_details: billingDetails,
       ...paymentMethodData,
       type,
-      card: this.element as Stripe.StripeCardElement,
+      card: this.element as any,
     });
   }
 
@@ -374,20 +370,14 @@ export class StripeElements extends StripeBase {
 
     await this.updateComplete;
 
-    const element = this.createElement({
-      hideIcon,
-      hidePostalCode,
-      iconStyle,
-      style,
-      value,
-    });
+    const element = this.createElement({});
 
     element.on('change', this.onChange);
     readonly.set<StripeElements>(this, { element });
     await this.updateComplete;
   }
 
-  private createElement(options: Stripe.StripeCardElementOptions) {
+  private createElement(options: Stripe.StripePaymentElementOptions) {
     const element = this.elements!.create('payment', options);
     return element;
   }
@@ -395,10 +385,10 @@ export class StripeElements extends StripeBase {
   /**
    * Updates the element's state.
    */
-  @bound private async onChange(event: Stripe.StripeCardElementChangeEvent): Promise<void> {
-    const { brand, complete, empty, error = null } = event;
-    const invalid = !(error || (!empty && !complete));
-    readonly.set<StripeElements>(this, { brand, complete, empty, error, invalid });
+  @bound private async onChange(event: Stripe.StripePaymentElementChangeEvent): Promise<void> {
+    const { complete, empty } = event;
+    const invalid = !empty && !complete;
+    readonly.set<StripeElements>(this, { complete, empty, invalid });
     await this.updateComplete;
     this.fire('change', event);
   }
