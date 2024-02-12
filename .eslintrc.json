@@ -1,5 +1,5 @@
 {
-  "extends": "@pwrs",
+  "extends": "plugin:lit/recommended",
   "globals": {
     "Stripe": true
   },
