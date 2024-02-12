@@ -297,7 +297,7 @@ export class StripeElementsPayment extends StripeBase {
         return this.createToken();
       default: {
         const error = this.createError(`cannot generate ${this.generate}`);
-        readonly.set<StripeElementsNew>(this, { error });
+        readonly.set<StripeElementsPayment>(this, { error });
         await this.updateComplete;
         throw error;
       }
@@ -311,7 +311,7 @@ export class StripeElementsPayment extends StripeBase {
     const { complete, empty, error } = this;
     const isValid = !error && complete && !empty;
     if (empty && !error)
-      readonly.set<StripeElementsNew>(this, {
+      readonly.set<StripeElementsPayment>(this, {
         error: this.createError("Your card number is empty."),
       });
     return isValid;
@@ -383,7 +383,7 @@ export class StripeElementsPayment extends StripeBase {
     const element = this.createElement({});
 
     element.on("change", this.onChange);
-    readonly.set<StripeElementsNew>(this, { element });
+    readonly.set<StripeElementsPayment>(this, { element });
     await this.updateComplete;
   }
 
@@ -407,7 +407,7 @@ export class StripeElementsPayment extends StripeBase {
   ): Promise<void> {
     const { complete, empty } = event;
     const invalid = !empty && !complete;
-    readonly.set<StripeElementsNew>(this, { complete, empty, invalid });
+    readonly.set<StripeElementsPayment>(this, { complete, empty, invalid });
     await this.updateComplete;
     this.fire("change", event);
   }
