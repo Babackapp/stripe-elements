@@ -7,7 +7,7 @@ export async function build({ watch = false } = {}) {
   await esbuild.build({
     entryPoints: [
       'src/stripe-elements.ts',
-      'src/stripe-elements-new.ts',
+      'src/stripe-elements-payment.ts',
       'src/stripe-payment-request.ts',
       'src/index.ts',
       ...glob.sync('src/lib/*.ts'),

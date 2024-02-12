@@ -4,7 +4,7 @@ declare module '*/stripe-elements.css' {
   export default css;
 }
 
-declare module '*/stripe-elements-new.css' {
+declare module '*/stripe-elements-payment.css' {
   import { CSSResult } from 'lit';
   const css: CSSResult;
   export default css;
