@@ -135,10 +135,10 @@ export class StripeBase extends LitElement {
    */
   @property({ type: String, attribute: 'client-secret' }) clientSecret?: string;
 
-    /**
-   * The `element-options` part of a Element init
-   */
-    @property({ type: String, attribute: 'element-options' }) elementOptions?: Stripe.StripeElementsOptionsMode;
+  /**
+ * The `element-options` part of a Element init
+ */
+  @property({ type: String, attribute: 'element-options' }) elementOptions?: Stripe.StripeElementsOptionsMode;
 
   /**
    * Type of payment representation to generate.
@@ -441,6 +441,7 @@ export class StripeBase extends LitElement {
           window.Stripe(publishableKey, options)
           : await loadStripe(publishableKey, options);
         let elements;
+        console.log("woooo", elementOptions);
         if (!elementOptions) elements = stripe?.elements();
         else elements = stripe?.elements(elementOptions);
         readonly.set<StripeBase>(this, { elements, error: null, stripe });
