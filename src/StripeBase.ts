@@ -442,7 +442,7 @@ export class StripeBase extends LitElement {
           : await loadStripe(publishableKey, options);
         
         console.log("eeee", usePayment);  
-        const elements = usePayment ? stripe?.elements({mode: "payment"}) : stripe?.elements();
+        const elements = usePayment ? stripe?.elements({mode: "payment", amount: 100, currency: "eur"}) : stripe?.elements();
         readonly.set<StripeBase>(this, { elements, error: null, stripe });
       } catch (e) {
         // eslint-disable-next-line no-console
