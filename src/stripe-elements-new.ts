@@ -378,7 +378,7 @@ export class StripeElementsNew extends StripeBase {
   }
 
   private createElement(options: Stripe.StripePaymentElementOptions) {
-    const optionsNew = {...options, payment_method_types: ['card'], mode: 'payment'}
+    const optionsNew = {...options, mode: 'payment'}
     const element = this.elements!.create('payment', optionsNew);    
     return element;
   }
