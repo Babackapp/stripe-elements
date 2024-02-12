@@ -370,7 +370,10 @@ export class StripeElementsNew extends StripeBase {
 
     await this.updateComplete;
 
-    const element = this.createElement({});
+    const element = this.createElement({
+      // @ts-ignore
+      payment_method_types: ['card']
+    });
 
     element.on('change', this.onChange);
     readonly.set<StripeElementsNew>(this, { element });
