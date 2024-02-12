@@ -396,13 +396,6 @@ export class StripeElementsPayment extends StripeBase {
   }
 
   private createElement(options: Stripe.StripePaymentElementOptions) {
-    // const optionsNew: StripePaymentElementOptions = {
-    //   // mode: "payment",
-    //   // amount: 100,
-    //   // currency: "eur",
-    //   payment_method_types: ["card"],
-    // };
-    // const element = this.elements!.create('payment', optionsNew);
     const element = this.elements!.create("payment");
     return element;
   }
