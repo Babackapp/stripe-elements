@@ -290,7 +290,7 @@ export class StripeElements extends StripeBase {
    */
   public async submit(): Promise<StripePaymentResponse> {
     switch (this.generate) {
-      case 'payment-method': return this.createPaymentMethod();
+      // case 'payment-method': return this.createPaymentMethod();
       case 'source': return this.createSource();
       case 'token': return this.createToken();
       default: {

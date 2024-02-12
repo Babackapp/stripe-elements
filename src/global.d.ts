@@ -4,6 +4,12 @@ declare module '*/stripe-elements.css' {
   export default css;
 }
 
+declare module '*/stripe-elements-new.css' {
+  import { CSSResult } from 'lit';
+  const css: CSSResult;
+  export default css;
+}
+
 declare module '*/stripe-payment-request.css' {
   import { CSSResult } from 'lit';
   const css: CSSResult;
