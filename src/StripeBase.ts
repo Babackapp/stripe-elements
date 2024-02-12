@@ -441,7 +441,8 @@ export class StripeBase extends LitElement {
           window.Stripe(publishableKey, options)
           : await loadStripe(publishableKey, options);
         let elements;
-        console.log("woooo", elementOptions);
+        console.log("woooo", elementOptions?.mode);
+        console.log("woooo", JSON.stringify(elementOptions));
         if (!elementOptions) elements = stripe?.elements();
         else elements = stripe?.elements(elementOptions);
         readonly.set<StripeBase>(this, { elements, error: null, stripe });
