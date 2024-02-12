@@ -370,10 +370,7 @@ export class StripeElementsNew extends StripeBase {
 
     await this.updateComplete;
 
-    const element = this.createElement({
-      // @ts-ignore
-      payment_method_types: ['card']
-    });
+    const element = this.createElement({});
 
     element.on('change', this.onChange);
     readonly.set<StripeElementsNew>(this, { element });
@@ -381,7 +378,8 @@ export class StripeElementsNew extends StripeBase {
   }
 
   private createElement(options: Stripe.StripePaymentElementOptions) {
-    const element = this.elements!.create('payment', options);
+    const optionsNew = {...options, payment_method_types: ['card']}
+    const element = this.elements!.create('payment', optionsNew);
     console.log(element);
     
     return element;
