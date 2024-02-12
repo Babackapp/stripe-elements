@@ -11,6 +11,7 @@ import { notify } from "./lib/notify.js";
 
 import sharedStyles from "./shared.css";
 import style from "./stripe-elements.css";
+import { StripePaymentElementOptions } from "@stripe/stripe-js";
 
 interface StripeStyleInit {
   base?: Stripe.StripeElementStyle;
@@ -395,12 +396,12 @@ export class StripeElementsPayment extends StripeBase {
   }
 
   private createElement(options: Stripe.StripePaymentElementOptions) {
-    const optionsNew = {
-      // mode: "payment",
-      amount: 100,
-      currency: "eur",
-      // payment_method_types: ["card"],
-    };
+    // const optionsNew: StripePaymentElementOptions = {
+    //   // mode: "payment",
+    //   // amount: 100,
+    //   // currency: "eur",
+    //   payment_method_types: ["card"],
+    // };
     // const element = this.elements!.create('payment', optionsNew);
     const element = this.elements!.create("payment");
     return element;
