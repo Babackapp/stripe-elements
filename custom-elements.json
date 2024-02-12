@@ -4,7 +4,7 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "./stripe-elements.js",
+      "path": "./stripe-elements-new.js",
       "declarations": [
         {
           "kind": "class",
@@ -482,6 +482,599 @@
                   "name": "event",
                   "type": {
                     "text": "Stripe.StripePaymentElementChangeEvent"
+                  }
+                }
+              ],
+              "description": "Updates the element's state."
+            }
+          ],
+          "events": [
+            {
+              "description": "Stripe Element change event",
+              "name": "'change'"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "hide-icon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to hide icons in the Stripe form.",
+              "fieldName": "hideIcon"
+            },
+            {
+              "name": "hide-postal-code",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether or not to hide the postal code field.\nUseful when you gather shipping info elsewhere.",
+              "fieldName": "hidePostalCode"
+            },
+            {
+              "name": "icon-style",
+              "type": {
+                "text": "IconStyle"
+              },
+              "default": "'default'",
+              "description": "Stripe icon style.",
+              "fieldName": "iconStyle"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "StripeFormValues"
+              },
+              "default": "{}",
+              "description": "Prefilled values for form.",
+              "fieldName": "value"
+            },
+            {
+              "name": "brand",
+              "type": {
+                "text": "CardBrand | null"
+              },
+              "default": "null",
+              "description": "The card brand detected by Stripe",
+              "fieldName": "brand"
+            },
+            {
+              "name": "complete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the form is complete.",
+              "fieldName": "complete"
+            },
+            {
+              "name": "empty",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "If the form is empty.",
+              "fieldName": "empty"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the form is invalid.",
+              "fieldName": "invalid"
+            }
+          ],
+          "superclass": {
+            "name": "StripeBase",
+            "module": "/src/StripeBase.js"
+          },
+          "tagName": "stripe-elements",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "StripeElements",
+          "declaration": {
+            "name": "StripeElements",
+            "module": "./stripe-elements-new.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "stripe-elements",
+          "declaration": {
+            "name": "StripeElements",
+            "module": "./stripe-elements-new.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "./stripe-elements.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "[Stripe.js v3 Card Elements](https://stripe.com/docs/elements), but it's a Web Component!\nSupports Shadow DOM.\n\n👨‍🎨 [Live Demo](https://bennypowers.dev/stripe-elements/?path=/docs/stripe-elements--enter-a-stripe-publishable-key) 👀\n\n### 🧙‍♂️ Usage\nIf you prebuilt with Snowpack, load the module from your `web_modules` directory\n\n```html\n<script type=\"module\" src=\"/web_modules/@power-elements/stripe-elements/stripe-elements.js\"></script>\n```\n\nAlternatively, load the module from the unpkg CDN\n```html\n<script type=\"module\" src=\"https://unpkg.com/@power-elements/stripe-elements/stripe-elements.js?module\"></script>\n```\n\nThen you can add the element to your page.\n\n```html\n<stripe-elements id=\"stripe\"\n    action=\"/payment\"\n    publishable-key=\"pk_test_XXXXXXXXXXXXXXXXXXXXXXXX\"\n></stripe-elements>\n```\n\nSee the demos for more comprehensive examples.\n  - Using `<stripe-elements>` with [plain HTML and JavaScript](https://bennypowers.dev/stripe-elements/?path=/docs/framework-examples-html--stripe-elements).\n  - Using `<stripe-elements>` in a [LitElement](https://bennypowers.dev/stripe-elements/?path=/docs/framework-examples-litelement--stripe-elements).\n  - Using `<stripe-elements>` in a [Vue Component](https://bennypowers.dev/stripe-elements/?path=/docs/framework-examples-vue--stripe-elements).\n  - Using `<stripe-elements>` in an [Angular component](https://bennypowers.dev/stripe-elements/?path=/docs/framework-examples-angular--stripe-elements).\n  - Using `<stripe-elements>` in a [React component](https://bennypowers.dev/stripe-elements/?path=/docs/framework-examples-react--stripe-elements).\n  - Using `<stripe-elements>` in a [Preact component](https://bennypowers.dev/stripe-elements/?path=/docs/framework-examples-preact--stripe-elements).\n\n## Styling\n\nStripe v3's 'Stripe Elements' are not custom elements, but rather forms\nhosted by stripe and injected into your page via an iFrame. When we refer to the\n'Stripe Element' in this document, we are referring to the hosted Stripe form,\nnot the `<stripe-element>` custom element. But when I mention the 'element', I mean the custom element.\n\nWhen you apply CSS to the custom properties available, they're parsed and sent to Stripe, who should apply them to the Stripe Element they return in the iFrame.\n\n- `base` styles are inherited by all other variants.\n- `complete` styles are applied when the Stripe Element has valid input.\n- `empty` styles are applied when the Stripe Element has no user input.\n- `invalid` styles are applied when the Stripe Element has invalid input.\n\nThere are 11 properties for each state that you can set which will be read into the Stripe Element iFrame:\n\n- `color`\n- `font-family`\n- `font-size`\n- `font-smoothing`\n- `font-variant`\n- `icon-color`\n- `line-height`\n- `letter-spacing`\n- `text-decoration`\n- `text-shadow`\n- `text-transform`",
+          "name": "StripeElements",
+          "cssProperties": [
+            {
+              "description": "border radius of the element container",
+              "name": "--stripe-elements-border-radius",
+              "default": "`4px`"
+            },
+            {
+              "description": "border property of the element container",
+              "name": "--stripe-elements-border",
+              "default": "`1px solid transparent`"
+            },
+            {
+              "description": "box shadow for the element container",
+              "name": "--stripe-elements-box-shadow",
+              "default": "`0 1px 3px 0 #e6ebf1`"
+            },
+            {
+              "description": "transition property for the element container",
+              "name": "--stripe-elements-transition",
+              "default": "`box-shadow 150ms ease`"
+            },
+            {
+              "description": "`color` property for the element in its base state",
+              "name": "--stripe-elements-base-color"
+            },
+            {
+              "description": "`font-family` property for the element in its base state",
+              "name": "--stripe-elements-base-font-family"
+            },
+            {
+              "description": "`font-size` property for the element in its base state",
+              "name": "--stripe-elements-base-font-size"
+            },
+            {
+              "description": "`font-smoothing` property for the element in its base state",
+              "name": "--stripe-elements-base-font-smoothing"
+            },
+            {
+              "description": "`font-variant` property for the element in its base state",
+              "name": "--stripe-elements-base-font-variant"
+            },
+            {
+              "description": "`icon-color` property for the element in its base state",
+              "name": "--stripe-elements-base-icon-color"
+            },
+            {
+              "description": "`line-height` property for the element in its base state",
+              "name": "--stripe-elements-base-line-height"
+            },
+            {
+              "description": "`letter-spacing` property for the element in its base state",
+              "name": "--stripe-elements-base-letter-spacing"
+            },
+            {
+              "description": "`text-decoration` property for the element in its base state",
+              "name": "--stripe-elements-base-text-decoration"
+            },
+            {
+              "description": "`text-shadow` property for the element in its base state",
+              "name": "--stripe-elements-base-text-shadow"
+            },
+            {
+              "description": "`text-transform` property for the element in its base state",
+              "name": "--stripe-elements-base-text-transform"
+            },
+            {
+              "description": "`color` property for the element in its complete state",
+              "name": "--stripe-elements-complete-color"
+            },
+            {
+              "description": "`font-family` property for the element in its complete state",
+              "name": "--stripe-elements-complete-font-family"
+            },
+            {
+              "description": "`font-size` property for the element in its complete state",
+              "name": "--stripe-elements-complete-font-size"
+            },
+            {
+              "description": "`font-smoothing` property for the element in its complete state",
+              "name": "--stripe-elements-complete-font-smoothing"
+            },
+            {
+              "description": "`font-variant` property for the element in its complete state",
+              "name": "--stripe-elements-complete-font-variant"
+            },
+            {
+              "description": "`icon-color` property for the element in its complete state",
+              "name": "--stripe-elements-complete-icon-color"
+            },
+            {
+              "description": "`line-height` property for the element in its complete state",
+              "name": "--stripe-elements-complete-line-height"
+            },
+            {
+              "description": "`letter-spacing` property for the element in its complete state",
+              "name": "--stripe-elements-complete-letter-spacing"
+            },
+            {
+              "description": "`text-decoration` property for the element in its complete state",
+              "name": "--stripe-elements-complete-text-decoration"
+            },
+            {
+              "description": "`text-shadow` property for the element in its complete state",
+              "name": "--stripe-elements-complete-text-shadow"
+            },
+            {
+              "description": "`text-transform` property for the element in its complete state",
+              "name": "--stripe-elements-complete-text-transform"
+            },
+            {
+              "description": "`color` property for the element in its empty state",
+              "name": "--stripe-elements-empty-color"
+            },
+            {
+              "description": "`font-family` property for the element in its empty state",
+              "name": "--stripe-elements-empty-font-family"
+            },
+            {
+              "description": "`font-size` property for the element in its empty state",
+              "name": "--stripe-elements-empty-font-size"
+            },
+            {
+              "description": "`font-smoothing` property for the element in its empty state",
+              "name": "--stripe-elements-empty-font-smoothing"
+            },
+            {
+              "description": "`font-variant` property for the element in its empty state",
+              "name": "--stripe-elements-empty-font-variant"
+            },
+            {
+              "description": "`icon-color` property for the element in its empty state",
+              "name": "--stripe-elements-empty-icon-color"
+            },
+            {
+              "description": "`line-height` property for the element in its empty state",
+              "name": "--stripe-elements-empty-line-height"
+            },
+            {
+              "description": "`letter-spacing` property for the element in its empty state",
+              "name": "--stripe-elements-empty-letter-spacing"
+            },
+            {
+              "description": "`text-decoration` property for the element in its empty state",
+              "name": "--stripe-elements-empty-text-decoration"
+            },
+            {
+              "description": "`text-shadow` property for the element in its empty state",
+              "name": "--stripe-elements-empty-text-shadow"
+            },
+            {
+              "description": "`text-transform` property for the element in its empty state",
+              "name": "--stripe-elements-empty-text-transform"
+            },
+            {
+              "description": "`color` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-color"
+            },
+            {
+              "description": "`font-family` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-font-family"
+            },
+            {
+              "description": "`font-size` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-font-size"
+            },
+            {
+              "description": "`font-smoothing` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-font-smoothing"
+            },
+            {
+              "description": "`font-variant` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-font-variant"
+            },
+            {
+              "description": "`icon-color` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-icon-color"
+            },
+            {
+              "description": "`line-height` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-line-height"
+            },
+            {
+              "description": "`letter-spacing` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-letter-spacing"
+            },
+            {
+              "description": "`text-decoration` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-text-decoration"
+            },
+            {
+              "description": "`text-shadow` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-text-shadow"
+            },
+            {
+              "description": "`text-transform` property for the element in its invalid state",
+              "name": "--stripe-elements-invalid-text-transform"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "is",
+              "type": {
+                "text": "string"
+              },
+              "static": true,
+              "default": "'stripe-elements'"
+            },
+            {
+              "kind": "field",
+              "name": "elementType",
+              "type": {
+                "text": "string"
+              },
+              "static": true,
+              "default": "'card'"
+            },
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "Stripe.StripeCardElement"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hideIcon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to hide icons in the Stripe form.",
+              "attribute": "hide-icon"
+            },
+            {
+              "kind": "field",
+              "name": "hidePostalCode",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether or not to hide the postal code field.\nUseful when you gather shipping info elsewhere.",
+              "attribute": "hide-postal-code"
+            },
+            {
+              "kind": "field",
+              "name": "iconStyle",
+              "type": {
+                "text": "IconStyle"
+              },
+              "default": "'default'",
+              "description": "Stripe icon style.",
+              "attribute": "icon-style"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "StripeFormValues"
+              },
+              "default": "{}",
+              "description": "Prefilled values for form.",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "brand",
+              "type": {
+                "text": "CardBrand | null"
+              },
+              "default": "null",
+              "description": "The card brand detected by Stripe",
+              "attribute": "brand"
+            },
+            {
+              "kind": "field",
+              "name": "complete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the form is complete.",
+              "attribute": "complete",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "empty",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "If the form is empty.",
+              "attribute": "empty",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the form is invalid.",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "createPaymentMethod",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<Stripe.PaymentMethodResult>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "paymentMethodData",
+                  "default": "this.getPaymentMethodData()",
+                  "type": {
+                    "text": "Stripe.CreatePaymentMethodData"
+                  }
+                }
+              ],
+              "description": "Submit payment information to generate a paymentMethod"
+            },
+            {
+              "kind": "method",
+              "name": "createSource",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<Stripe.SourceResult>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "sourceData",
+                  "default": "this.sourceData!",
+                  "type": {
+                    "text": "Stripe.CreateSourceData"
+                  }
+                }
+              ],
+              "description": "Submit payment information to generate a source"
+            },
+            {
+              "kind": "method",
+              "name": "createToken",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<Stripe.TokenResult>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "tokenData",
+                  "default": "this.tokenData"
+                }
+              ],
+              "description": "Submit payment information to generate a token"
+            },
+            {
+              "kind": "method",
+              "name": "isPotentiallyValid",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Checks for potential validity. A potentially valid form is one that is not empty, not complete and has no error. A validated form also counts as potentially valid."
+            },
+            {
+              "kind": "method",
+              "name": "reset",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Resets the Stripe card."
+            },
+            {
+              "kind": "method",
+              "name": "submit",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<StripePaymentResponse>"
+                }
+              },
+              "description": "Generates a payment representation of the type specified by `generate`."
+            },
+            {
+              "kind": "method",
+              "name": "validate",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Checks if the Stripe form is valid."
+            },
+            {
+              "kind": "method",
+              "name": "updateStyle",
+              "privacy": "public"
+            },
+            {
+              "kind": "method",
+              "name": "getPaymentMethodData",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Stripe.CreatePaymentMethodData"
+                }
+              },
+              "description": "Generates PaymentMethodData from the element."
+            },
+            {
+              "kind": "method",
+              "name": "getStripeElementsStyles",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Stripe.StripeElementStyle"
+                }
+              },
+              "description": "Returns a Stripe-friendly style object computed from CSS custom properties"
+            },
+            {
+              "kind": "method",
+              "name": "initElement",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "createElement",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "Stripe.StripeCardElementOptions"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Stripe.StripeCardElementChangeEvent"
                   }
                 }
               ],

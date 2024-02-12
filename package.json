@@ -29,7 +29,7 @@
     "build": "run-p build:**",
     "build:types": "tsc --emitDeclarationOnly && cp src/*.d.ts . && cp src/lib/*.d.ts ./lib/",
     "build:esbuild": "node scripts/build.js",
-    "build:analyze": "cem analyze",
+    "build:analyze": "",
     "docs": "eleventy --incremental",
     "start": "eleventy --incremental --watch --serve",
     "clean": "run-s clean:*",
