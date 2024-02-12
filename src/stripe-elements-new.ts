@@ -171,7 +171,7 @@ const SUB_STYLES = [
  */
 @customElement('stripe-elements-new')
 export class StripeElementsNew extends StripeBase {
-  static readonly is = 'stripe-elements';
+  static readonly is = 'stripe-elements-new';
 
   static readonly elementType = 'payment';
 
