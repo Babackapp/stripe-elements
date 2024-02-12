@@ -1,51 +1,51 @@
-import type * as Stripe from '@stripe/stripe-js';
-import { property, customElement } from 'lit/decorators.js';
+import type * as Stripe from "@stripe/stripe-js";
+import { property, customElement } from "lit/decorators.js";
 
-import { bound } from './lib/bound.js';
+import { bound } from "./lib/bound.js";
 
-import { StripeBase, StripePaymentResponse } from './StripeBase.js';
-import { dash } from './lib/strings.js';
-import { stripeMethod } from './lib/stripe-method-decorator.js';
-import { readonly } from './lib/read-only.js';
-import { notify } from './lib/notify.js';
+import { StripeBase, StripePaymentResponse } from "./StripeBase.js";
+import { dash } from "./lib/strings.js";
+import { stripeMethod } from "./lib/stripe-method-decorator.js";
+import { readonly } from "./lib/read-only.js";
+import { notify } from "./lib/notify.js";
 
-import sharedStyles from './shared.css';
-import style from './stripe-elements.css';
+import sharedStyles from "./shared.css";
+import style from "./stripe-elements.css";
 
 interface StripeStyleInit {
-   base?: Stripe.StripeElementStyle;
-   complete?: Stripe.StripeElementStyle;
-   empty?: Stripe.StripeElementStyle;
-   invalid?: Stripe.StripeElementStyle;
+  base?: Stripe.StripeElementStyle;
+  complete?: Stripe.StripeElementStyle;
+  empty?: Stripe.StripeElementStyle;
+  invalid?: Stripe.StripeElementStyle;
 }
 
-type IconStyle = Stripe.StripeCardElementOptions['iconStyle'];
-type CardBrand = Stripe.StripeCardElementChangeEvent['brand'];
-type StripeFormValues = Stripe.StripeCardElementOptions['value'];
+type IconStyle = Stripe.StripeCardElementOptions["iconStyle"];
+type CardBrand = Stripe.StripeCardElementChangeEvent["brand"];
+type StripeFormValues = Stripe.StripeCardElementOptions["value"];
 
 const ALLOWED_STYLES = [
-  'color',
-  'fontFamily',
-  'fontSize',
-  'fontStyle',
-  'fontSmoothing',
-  'fontVariant',
-  'iconColor',
-  'lineHeight',
-  'letterSpacing',
-  'textDecoration',
-  'textShadow',
-  'textTransform',
+  "color",
+  "fontFamily",
+  "fontSize",
+  "fontStyle",
+  "fontSmoothing",
+  "fontVariant",
+  "iconColor",
+  "lineHeight",
+  "letterSpacing",
+  "textDecoration",
+  "textShadow",
+  "textTransform",
 ];
 
 const SUB_STYLES = [
-  ':hover',
-  ':focus',
-  '::placeholder',
-  '::selection',
-  ':-webkit-autofill',
+  ":hover",
+  ":focus",
+  "::placeholder",
+  "::selection",
+  ":-webkit-autofill",
   // available for all Elements except the paymentRequestButton Element.
-  ':disabled',
+  ":disabled",
 ];
 
 /**
@@ -169,16 +169,13 @@ const SUB_STYLES = [
  *
  * @fires 'change' - Stripe Element change event
  */
-@customElement('stripe-elements-new')
+@customElement("stripe-elements-new")
 export class StripeElementsNew extends StripeBase {
-  static readonly is = 'stripe-elements-new';
+  static readonly is = "stripe-elements-new";
 
-  static readonly elementType = 'payment';
+  static readonly elementType = "payment";
 
-  static readonly styles = [
-    sharedStyles,
-    style,
-  ];
+  static readonly styles = [sharedStyles, style];
 
   declare element: Stripe.StripePaymentElement;
 
@@ -187,18 +184,20 @@ export class StripeElementsNew extends StripeBase {
   /**
    * Whether to hide icons in the Stripe form.
    */
-  @property({ type: Boolean, attribute: 'hide-icon' }) hideIcon = false;
+  @property({ type: Boolean, attribute: "hide-icon" }) hideIcon = false;
 
   /**
    * Whether or not to hide the postal code field.
    * Useful when you gather shipping info elsewhere.
    */
-  @property({ type: Boolean, attribute: 'hide-postal-code' }) hidePostalCode = false;
+  @property({ type: Boolean, attribute: "hide-postal-code" }) hidePostalCode =
+    false;
 
   /**
    * Stripe icon style.
    */
-  @property({ type: String, attribute: 'icon-style' }) iconStyle: IconStyle = 'default';
+  @property({ type: String, attribute: "icon-style" }) iconStyle: IconStyle =
+    "default";
 
   /**
    * Prefilled values for form.
@@ -290,9 +289,12 @@ export class StripeElementsNew extends StripeBase {
    */
   public async submit(): Promise<StripePaymentResponse> {
     switch (this.generate) {
-      case 'payment-method': return this.createPaymentMethod();
-      case 'source': return this.createSource();
-      case 'token': return this.createToken();
+      case "payment-method":
+        return this.createPaymentMethod();
+      case "source":
+        return this.createSource();
+      case "token":
+        return this.createToken();
       default: {
         const error = this.createError(`cannot generate ${this.generate}`);
         readonly.set<StripeElementsNew>(this, { error });
@@ -309,7 +311,9 @@ export class StripeElementsNew extends StripeBase {
     const { complete, empty, error } = this;
     const isValid = !error && complete && !empty;
     if (empty && !error)
-      readonly.set<StripeElementsNew>(this, { error: this.createError('Your card number is empty.') });
+      readonly.set<StripeElementsNew>(this, {
+        error: this.createError("Your card number is empty."),
+      });
     return isValid;
   }
 
@@ -321,46 +325,52 @@ export class StripeElementsNew extends StripeBase {
    * Generates PaymentMethodData from the element.
    */
   private getPaymentMethodData(): Stripe.CreatePaymentMethodData {
-    const type = 'card';
+    const type = "card";
     const { billingDetails, paymentMethodData } = this;
-    return ({
+    return {
       billing_details: billingDetails,
       ...paymentMethodData,
       type,
       card: this.element as any,
-    });
+    };
   }
 
   /**
    * Returns a Stripe-friendly style object computed from CSS custom properties
    */
   private getStripeElementsStyles(): Stripe.StripeElementStyle {
-    const getStyle = (prop: string): string|undefined =>
+    const getStyle = (prop: string): string | undefined =>
       this.getCSSCustomPropertyValue(prop) || undefined;
 
-    const STATES = ['base', 'complete', 'empty', 'invalid'];
-    const subReducer = (state: string) => (acc: StripeStyleInit, sub: string) => {
-      if (state.includes('-')) return acc;
-      const subProp = sub.split(':').pop();
-      return {
-        ...acc,
-        [sub]: ALLOWED_STYLES.reduce(styleReducer(`${state}-${subProp}`), {}),
+    const STATES = ["base", "complete", "empty", "invalid"];
+    const subReducer =
+      (state: string) => (acc: StripeStyleInit, sub: string) => {
+        if (state.includes("-")) return acc;
+        const subProp = sub.split(":").pop();
+        return {
+          ...acc,
+          [sub]: ALLOWED_STYLES.reduce(styleReducer(`${state}-${subProp}`), {}),
+        };
       };
-    };
 
-    const styleReducer = (state: string) => (init: StripeStyleInit, p: string): StripeStyleInit => {
-      const prop = `--stripe-elements-${state}-${dash(p)}`;
-      return ({
-        ...init,
-        [p]: getStyle(prop),
-        ...SUB_STYLES.reduce(subReducer(state), {}),
-      });
-    };
+    const styleReducer =
+      (state: string) =>
+      (init: StripeStyleInit, p: string): StripeStyleInit => {
+        const prop = `--stripe-elements-${state}-${dash(p)}`;
+        return {
+          ...init,
+          [p]: getStyle(prop),
+          ...SUB_STYLES.reduce(subReducer(state), {}),
+        };
+      };
 
-    return STATES.reduce((acc, state) => ({
-      ...acc,
-      [state]: ALLOWED_STYLES.reduce(styleReducer(state), {}),
-    }), {});
+    return STATES.reduce(
+      (acc, state) => ({
+        ...acc,
+        [state]: ALLOWED_STYLES.reduce(styleReducer(state), {}),
+      }),
+      {}
+    );
   }
 
   protected async initElement(): Promise<void> {
@@ -372,25 +382,33 @@ export class StripeElementsNew extends StripeBase {
 
     const element = this.createElement({});
 
-    element.on('change', this.onChange);
+    element.on("change", this.onChange);
     readonly.set<StripeElementsNew>(this, { element });
     await this.updateComplete;
   }
 
   private createElement(options: Stripe.StripePaymentElementOptions) {
-    const optionsNew = {...options, mode: 'payment'}
-    const element = this.elements!.create('payment', optionsNew);    
+    const optionsNew = {
+      mode: "payment",
+      amount: 100,
+      currency: "eur",
+      payment_method_types: ["card"],
+    };
+    // const element = this.elements!.create('payment', optionsNew);
+    const element = this.elements!.create("payment");
     return element;
   }
 
   /**
    * Updates the element's state.
    */
-  @bound private async onChange(event: Stripe.StripePaymentElementChangeEvent): Promise<void> {
+  @bound private async onChange(
+    event: Stripe.StripePaymentElementChangeEvent
+  ): Promise<void> {
     const { complete, empty } = event;
     const invalid = !empty && !complete;
     readonly.set<StripeElementsNew>(this, { complete, empty, invalid });
     await this.updateComplete;
-    this.fire('change', event);
+    this.fire("change", event);
   }
 }
