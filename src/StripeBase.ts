@@ -26,7 +26,7 @@ export const enum SlotName {
   'stripe-payment-request' = 'stripe-payment-request-slot',
 }
 
-export type PaymentRepresentation = 'payment-method' | 'source' | 'token';
+export type PaymentRepresentation = 'payment-method' | 'source' | 'token' | 'payment-intent';
 export type StripePaymentResponse =
   | Stripe.PaymentIntentResult
   | Stripe.PaymentMethodResult

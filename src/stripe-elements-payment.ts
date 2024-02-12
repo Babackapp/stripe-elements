@@ -289,6 +289,13 @@ export class StripeElementsPayment extends StripeBase {
    */
   public async submit(): Promise<StripePaymentResponse> {
     switch (this.generate) {
+      case "payment-intent":
+        return this.stripe!.confirmPayment({
+          elements: this.elements!,
+          clientSecret: this.clientSecret!,
+          confirmParams: {},
+          redirect: "if_required"
+        })
       case "payment-method":
         return this.createPaymentMethod();
       case "source":
