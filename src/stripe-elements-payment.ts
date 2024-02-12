@@ -169,9 +169,9 @@ const SUB_STYLES = [
  *
  * @fires 'change' - Stripe Element change event
  */
-@customElement("stripe-elements-new")
-export class StripeElementsNew extends StripeBase {
-  static readonly is = "stripe-elements-new";
+@customElement("stripe-elements-payment")
+export class StripeElementsPayment extends StripeBase {
+  static readonly is = "stripe-elements-payment";
 
   static readonly elementType = "payment";
 

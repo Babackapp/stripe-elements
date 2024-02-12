@@ -22,7 +22,7 @@ import { StripeElementLocale } from '@stripe/stripe-js';
 
 export const enum SlotName {
   'stripe-elements' = 'stripe-elements-slot',
-  'stripe-elements-new' = 'stripe-elements-new-slot',
+  'stripe-elements-payment' = 'stripe-elements-payment-slot',
   'stripe-payment-request' = 'stripe-payment-request-slot',
 }
 
@@ -50,7 +50,7 @@ class StripeElementsError extends Error {
   originalMessage: string;
 
   constructor(
-    tag: 'stripe-elements' | 'stripe-elements-new' | 'stripe-payment-request',
+    tag: 'stripe-elements' | 'stripe-elements-payment' | 'stripe-payment-request',
     message: string
   ) {
     super(`<${tag}>: ${message}`);
@@ -85,7 +85,7 @@ const errorConverter: ComplexAttributeConverter = {
  * @csspart 'stripe' - container for the stripe element
  */
 export class StripeBase extends LitElement {
-  static is: 'stripe-elements' | 'stripe-elements-new' | 'stripe-payment-request';
+  static is: 'stripe-elements' | 'stripe-elements-payment' | 'stripe-payment-request';
 
   /* PAYMENT CONFIGURATION */
 

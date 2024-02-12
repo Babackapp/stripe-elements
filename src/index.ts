@@ -1,3 +1,3 @@
 export { StripeElements } from './stripe-elements.js';
-export { StripeElementsNew } from './stripe-elements-new.js';
+export { StripeElementsPayment } from './stripe-elements-payment.js';
 export { StripePaymentRequest } from './stripe-payment-request.js';
