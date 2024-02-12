@@ -579,17 +579,17 @@
       "exports": [
         {
           "kind": "js",
-          "name": "StripeElements",
+          "name": "StripeElementsNew",
           "declaration": {
-            "name": "StripeElements",
+            "name": "StripeElementsNew",
             "module": "./stripe-elements-new.js"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "stripe-elements",
+          "name": "stripe-elements-new",
           "declaration": {
-            "name": "StripeElements",
+            "name": "StripeElementsNew",
             "module": "./stripe-elements-new.js"
           }
         }
