@@ -135,6 +135,11 @@ export class StripeBase extends LitElement {
    */
   @property({ type: String, attribute: 'client-secret' }) clientSecret?: string;
 
+    /**
+   * The `element-options` part of a Element init
+   */
+    @property({ type: String, attribute: 'element-options' }) elementOptions?: Stripe.StripeElementsOptionsMode;
+
   /**
    * Type of payment representation to generate.
    */
@@ -422,7 +427,7 @@ export class StripeBase extends LitElement {
    * Initializes Stripe and elements.
    */
   private async initStripe(): Promise<void> {
-    const { publishableKey, stripeAccount, locale } = this;
+    const { publishableKey, stripeAccount, locale, elementOptions } = this;
     if (!publishableKey) {
       readonly.set<StripeBase>(this, {
         elements: null,
@@ -435,7 +440,9 @@ export class StripeBase extends LitElement {
         const stripe = window.Stripe ?
           window.Stripe(publishableKey, options)
           : await loadStripe(publishableKey, options);
-        const elements = stripe?.elements();
+        let elements;
+        if (!elementOptions) elements = stripe?.elements();
+        else elements = stripe?.elements(elementOptions);
         readonly.set<StripeBase>(this, { elements, error: null, stripe });
       } catch (e) {
         // eslint-disable-next-line no-console
