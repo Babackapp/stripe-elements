@@ -138,7 +138,7 @@ export class StripeBase extends LitElement {
   /**
  * The `element-options` part of a Element init
  */
-  @property({ type: String, attribute: 'element-options' }) elementOptions?: Stripe.StripeElementsOptionsMode;
+  @property({ type: String, attribute: 'use-payment' }) elementOptions?: boolean;
 
   /**
    * Type of payment representation to generate.
@@ -440,11 +440,7 @@ export class StripeBase extends LitElement {
         const stripe = window.Stripe ?
           window.Stripe(publishableKey, options)
           : await loadStripe(publishableKey, options);
-        let elements;
-        console.log("woooo", elementOptions?.mode);
-        console.log("woooo", JSON.stringify(elementOptions));
-        if (!elementOptions) elements = stripe?.elements();
-        else elements = stripe?.elements(elementOptions);
+        const elements = elementOptions ? stripe?.elements({mode: "payment"}) : stripe?.elements();
         readonly.set<StripeBase>(this, { elements, error: null, stripe });
       } catch (e) {
         // eslint-disable-next-line no-console
