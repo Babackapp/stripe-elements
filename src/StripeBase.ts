@@ -441,7 +441,6 @@ export class StripeBase extends LitElement {
           window.Stripe(publishableKey, options)
           : await loadStripe(publishableKey, options);
         
-        console.log("eeee", usePayment);  
         const elements = usePayment ? stripe?.elements({mode: "payment", amount: 100, currency: "eur", payment_method_types: ["card"]}) : stripe?.elements();
         readonly.set<StripeBase>(this, { elements, error: null, stripe });
       } catch (e) {
