@@ -195,8 +195,8 @@ export class StripeElementsPayment extends StripeBase {
     false;
 
   /**
-   * Whether or not to hide the postal code field.
-   * Useful when you gather shipping info elsewhere.
+   * Whether or not to hide the name
+   * Useful when you gather info elsewhere.
    */
   @property({ type: Boolean, attribute: "hide-name" }) hideName =
       false;
@@ -395,11 +395,14 @@ export class StripeElementsPayment extends StripeBase {
 
     await this.updateComplete;
 
-    console.log(hideName)
+    console.log("hidename", hideName)
     const element = this.createElement({
       fields: {
         billingDetails: {
-          name: hideName ? "never" : "auto",
+            name: "auto",
+            email: "auto",
+            phone: "never",
+            address: "never"
         }
       },
     });
