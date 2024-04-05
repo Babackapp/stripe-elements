@@ -395,13 +395,7 @@ export class StripeElementsPayment extends StripeBase {
 
     await this.updateComplete;
 
-    const element = this.createElement({
-      defaultValues: {
-        billingDetails: {
-          name: "Test user"
-        }
-      }
-    });
+    const element = this.createElement({});
 
     element.on("change", this.onChange);
     readonly.set<StripeElementsPayment>(this, { element });
