@@ -395,6 +395,7 @@ export class StripeElementsPayment extends StripeBase {
 
     await this.updateComplete;
 
+    console.log(hideName)
     const element = this.createElement({
       fields: {
         billingDetails: {

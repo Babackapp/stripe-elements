@@ -256,6 +256,16 @@
             },
             {
               "kind": "field",
+              "name": "hideName",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether or not to hide the postal code field.\nUseful when you gather shipping info elsewhere.",
+              "attribute": "hide-postal-code"
+            },
+            {
+              "kind": "field",
               "name": "iconStyle",
               "type": {
                 "text": "IconStyle"
