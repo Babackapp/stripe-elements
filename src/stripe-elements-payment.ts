@@ -395,16 +395,12 @@ export class StripeElementsPayment extends StripeBase {
 
     await this.updateComplete;
 
-    console.log("hidename", hideName)
     const element = this.createElement({
-      fields: {
+      defaultValues: {
         billingDetails: {
-            name: "auto",
-            email: "auto",
-            phone: "never",
-            address: "never"
+          name: "Test user"
         }
-      },
+      }
     });
 
     element.on("change", this.onChange);
