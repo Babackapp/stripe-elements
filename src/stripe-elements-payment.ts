@@ -195,6 +195,13 @@ export class StripeElementsPayment extends StripeBase {
     false;
 
   /**
+   * Whether or not to hide the postal code field.
+   * Useful when you gather shipping info elsewhere.
+   */
+  @property({ type: Boolean, attribute: "hide-name" }) hideName =
+      false;
+
+  /**
    * Stripe icon style.
    */
   @property({ type: String, attribute: "icon-style" }) iconStyle: IconStyle =
@@ -383,12 +390,18 @@ export class StripeElementsPayment extends StripeBase {
 
   protected async initElement(): Promise<void> {
     if (!this.stripe) return;
-    const { hidePostalCode, hideIcon, iconStyle, value } = this;
+    const { hidePostalCode, hideIcon, hideName, iconStyle, value } = this;
     const style = this.getStripeElementsStyles();
 
     await this.updateComplete;
 
-    const element = this.createElement({});
+    const element = this.createElement({
+      fields: {
+        billingDetails: {
+          name: hideName ? "never" : "auto",
+        }
+      },
+    });
 
     element.on("change", this.onChange);
     readonly.set<StripeElementsPayment>(this, { element });
@@ -396,7 +409,7 @@ export class StripeElementsPayment extends StripeBase {
   }
 
   private createElement(options: Stripe.StripePaymentElementOptions) {
-    const element = this.elements!.create("payment");
+    const element = this.elements!.create("payment", options);
     return element;
   }
 
